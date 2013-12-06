@@ -1,0 +1,42 @@
+begin sift feature extraction
+481.193780899
+stacking features
+11.5115611553
+begin mini batch kmeans
+[_mini_batch_step] Reassigning 248 cluster centers.
+[_mini_batch_step] Reassigning 257 cluster centers.
+[_mini_batch_step] Reassigning 157 cluster centers.
+[_mini_batch_step] Reassigning 76 cluster centers.
+[_mini_batch_step] Reassigning 70 cluster centers.
+[_mini_batch_step] Reassigning 66 cluster centers.
+[_mini_batch_step] Reassigning 22 cluster centers.
+[_mini_batch_step] Reassigning 18 cluster centers.
+[_mini_batch_step] Reassigning 7 cluster centers.
+[_mini_batch_step] Reassigning 6 cluster centers.
+[_mini_batch_step] Reassigning 3 cluster centers.
+[_mini_batch_step] Reassigning 3 cluster centers.
+[_mini_batch_step] Reassigning 3 cluster centers.
+finished training
+2285.87506795
+begin histogram of features
+6.25067806244
+begin grid search with cross validation
+3032.50068808
+SVC(C=100, cache_size=200, class_weight=None, coef0=0.0, degree=3,
+  gamma=0.001, kernel=rbf, max_iter=-1, probability=False, shrinking=True,
+  tol=0.001, verbose=False)
+0.58685
+{'kernel': 'rbf', 'C': 100, 'gamma': 0.001}
+begin fitting test data
+139.123549938
+             precision    recall  f1-score   support
+
+          0       0.55      1.00      0.71      2504
+          1       1.00      0.18      0.30      2496
+
+avg / total       0.77      0.59      0.50      5000
+
+
+real    99m23.327s
+user    407m52.162s
+sys     7m0.809s
