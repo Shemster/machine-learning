@@ -91,32 +91,32 @@ def main():
     all_predicted_labels = online_mbk(all_sift_features)
     kmeans_end = time.time()
     print (kmeans_end - kmeans_start)
-#    print "begin histogram of features"
-#    hist_start = time.time()
-#    all_hist_features = get_hist_feature(sift_features,
-#            all_predicted_labels)
-#    hist_end = time.time()
-#    print (hist_end - hist_start)
-#
-#    X_train, X_test, Y_train, Y_test = train_test_split(all_hist_features, all_labels, test_size = 0.5, random_state = 42)
-#    tuned_parameters = [{'kernel': ['rbf'], 'gamma': [1e-3, 1e-4],'C': [1, 10, 100]},
-#            {'kernel': ['linear'], 'C': [0.001, 0.01, 0.1, 1, 10, 100]}]
-#    svc = svm.SVC()
-#    print "begin grid search with cross validation"
-#    grid_start = time.time()
-#    clf = GridSearchCV(svc, tuned_parameters, cv = 5, n_jobs = n_cpu)
-#    clf.fit(X_train, Y_train)
-#    grid_end = time.time()
-#    print (grid_end - grid_start)
-#    print clf.best_estimator_
-#    print clf.best_score_
-#    print cls.best_params_
-#    print "begin fitting test data"
-#    fit_start = time.time()
-#    Y_pred = clf.fit(X_test)
-#    fit_end = time.time()
-#    print (fit_end - fit_start)
-#    print classification_report(Y_test, Y_pred)
+    print "begin histogram of features"
+    hist_start = time.time()
+    all_hist_features = get_hist_feature(sift_features,
+            all_predicted_labels)
+    hist_end = time.time()
+    print (hist_end - hist_start)
+
+    X_train, X_test, Y_train, Y_test = train_test_split(all_hist_features, all_labels, test_size = 0.5, random_state = 42)
+    tuned_parameters = [{'kernel': ['rbf'], 'gamma': [1e-3, 1e-4],'C': [1, 10, 100]},
+            {'kernel': ['linear'], 'C': [0.001, 0.01, 0.1, 1, 10, 100]}]
+    svc = svm.SVC()
+    print "begin grid search with cross validation"
+    grid_start = time.time()
+    clf = GridSearchCV(svc, tuned_parameters, cv = 5, n_jobs = n_cpu)
+    clf.fit(X_train, Y_train)
+    grid_end = time.time()
+    print (grid_end - grid_start)
+    print clf.best_estimator_
+    print clf.best_score_
+    print cls.best_params_
+    print "begin fitting test data"
+    fit_start = time.time()
+    Y_pred = clf.fit(X_test)
+    fit_end = time.time()
+    print (fit_end - fit_start)
+    print classification_report(Y_test, Y_pred)
 
 
 if __name__ == "__main__":
