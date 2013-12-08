@@ -9,7 +9,7 @@ def read_img(imgfile):
     return img
 
 def train_predict(X_train, y_train, X_test, y_test):
-    model = cv2.createLBPHFaceRecognizer()
+    model = cv2.createLBPHFaceRecognizer(2, 16)
     model.train(np.asarray(X_train), np.asarray(y_train))
     pred = []
     for i, x_test in enumerate(X_test):
@@ -54,7 +54,7 @@ def main():
     data = pd.DataFrame(df, columns = ['true_label_test', 'distance',
         'true_label', 'match'])
     data.index += 1
-    data.to_csv('data.csv', index_label = 'index')
+    data.to_csv('pred_big_2_16.csv', index_label = 'index')
     
 
 
