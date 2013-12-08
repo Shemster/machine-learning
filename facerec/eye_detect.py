@@ -11,14 +11,17 @@ def import_files(file_list):
 def face_detect(imgfile):
 
     face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_alt.xml')
+    eye_cascade = cv2.CascadeClassifier('haarcascade_eye.xml')
     img = cv2.imread(imgfile, cv2.IMREAD_GRAYSCALE)
     faces = face_cascade.detectMultiScale(img, 1.1, 2, cv2.CASCADE_FIND_BIGGEST_OBJECT)
     total = len(faces)
     print "found" + str(total) + "faces"
     for i, (x, y, w, h) in enumerate(faces):
         roi = img[y:y+h, x:x+w]
+        eyes = eye_cascade.detectMultiScale(roi)
+        for (ex,ey,ew,eh) in eyes:
+            cv2.rectangle(roi_color,(ex,ey),(ex+ew,ey+eh),(0,255,0),2)
         outfile = imgfile[:18] + "orig_biggest/face_" + str(i) + "_" + imgfile[23:]
-        cv2.imwrite(outfile, roi)
 
 
 def main():
