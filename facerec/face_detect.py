@@ -4,7 +4,7 @@ from multiprocessing import Pool
 def import_files(file_list):
 
     with open(file_list) as img_file_list:
-         imgs  = [line.rstrip('\n') for line in img_file_list]
+        imgs  = [line.rstrip('\n') for line in img_file_list]
 
     return imgs
 
@@ -17,14 +17,14 @@ def face_detect(imgfile):
     print "found" + str(total) + "faces"
     for i, (x, y, w, h) in enumerate(faces):
         roi = img[y:y+h, x:x+w]
-        outfile = imgfile[:18] + "orig_biggest/face_" + str(i) + "_" + imgfile[23:]
+        outfile = imgfile[:18] + "orig3_biggest/face_" + str(i) + "_" + imgfile[24:]
         cv2.imwrite(outfile, roi)
 
 
 def main():
     n_cpu = 8
     p = Pool(n_cpu)
-    images = import_files('orig_list')
+    images = import_files('orig3_list')
     p.map(face_detect, images)
 
 

@@ -9,8 +9,11 @@ def read_img(imgfile):
     return img
 
 def train_predict(X_train, y_train, X_test, y_test):
-    model = cv2.createLBPHFaceRecognizer(2, 16)
+    model = cv2.createLBPHFaceRecognizer()
     model.train(np.asarray(X_train), np.asarray(y_train))
+    hist = model.getMatVector("histograms")
+    print len(hist)
+    print hist[0].shape
     pred = []
     for i, x_test in enumerate(X_test):
         [p_label, dist] = model.predict(np.asarray(x_test))
@@ -23,7 +26,7 @@ def train_predict(X_train, y_train, X_test, y_test):
 def main():
     imgs = []
     labels = []
-    with open ('big_db.csv') as db:
+    with open ('orig3_big_db.csv') as db:
         reader = csv.reader(db, delimiter=";")
         for row in reader:
             imgs.append(read_img(row[0]))
@@ -32,29 +35,30 @@ def main():
     results = []
 
     for i in xrange(0, len(imgs)):
-        print i
-        tmp_imgs = imgs[:]
-        tmp_labels = labels[:]
-        true_label = (tmp_labels[i])*np.ones(shape = (len(imgs) - 1, 1))
-        print true_label
-        X_train = [tmp_imgs[i]]
-        y_train = [tmp_labels[i]]
-        del tmp_imgs[i]
-        del tmp_labels[i]
-        X_test = tmp_imgs
-        y_test = tmp_labels
-        pred = train_predict(X_train, y_train, X_test, y_test)
-        mask = true_label[:, 0] == pred[:, 0]
-        match = 1*mask.reshape(pred.shape[0], 1)
-        result = np.hstack((pred, true_label, match))
-        print result.shape
-        results.append(result)
+        if i % 3 == 0:
+            print i
+            tmp_imgs = imgs[:]
+            tmp_labels = labels[:]
+            true_label = (tmp_labels[i])*np.ones(shape = (len(imgs) - 2, 1))
+            print tmp_labels[i]
+            X_train = [tmp_imgs[i], tmp_imgs[i+1]]
+            y_train = [tmp_labels[i], tmp_labels[i+1]]
+            del tmp_imgs[i:i+2]
+            del tmp_labels[i:i+2]
+            X_test = tmp_imgs
+            y_test = tmp_labels
+            pred = train_predict(X_train, y_train, X_test, y_test)
+            mask = true_label[:, 0] == pred[:, 0]
+            match = 1*mask.reshape(pred.shape[0], 1)
+            result = np.hstack((pred, true_label, match))
+            print result.shape
+            results.append(result)
 
-    df = np.vstack(results)
-    data = pd.DataFrame(df, columns = ['true_label_test', 'distance',
-        'true_label', 'match'])
-    data.index += 1
-    data.to_csv('pred_big_2_16.csv', index_label = 'index')
+    #df = np.vstack(results)
+    #data = pd.DataFrame(df, columns = ['true_label_test', 'distance',
+    #    'true_label', 'match'])
+    #data.index += 1
+    #data.to_csv('pred_3train_1_8.csv', index_label = 'index')
     
 
 
